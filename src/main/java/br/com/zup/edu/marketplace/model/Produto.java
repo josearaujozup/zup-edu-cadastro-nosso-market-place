@@ -38,4 +38,15 @@ public class Produto {
     public Long getId() {
         return id;
     }
+
+	public boolean isAtivo() {
+		boolean retorno = false;
+				
+		if(this.status == StatusProduto.PENDENTE || this.status == StatusProduto.CADASTRADO) {
+			retorno = true;
+		}
+		
+		System.out.println("teste: "+retorno);
+		return retorno;
+	}
 }
