@@ -1,6 +1,10 @@
 package br.com.zup.edu.marketplace.model;
 
 import javax.persistence.*;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
+
 import java.math.BigDecimal;
 
 @Entity
@@ -48,5 +52,18 @@ public class Produto {
 		
 		System.out.println("teste: "+retorno);
 		return retorno;
+	}
+
+	private boolean isPedente() {
+		return this.status == StatusProduto.PENDENTE;
+	}
+
+	public void atualizar(String descricao) {
+		
+		if(!isPedente()) {
+			throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY,"produto cadastrado ou inativo");
+		}
+		
+		this.descricao = descricao;
 	}
 }
