@@ -66,4 +66,21 @@ public class Produto {
 		
 		this.descricao = descricao;
 	}
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public StatusProduto getStatus() {
+		return status;
+	}
+
+	public BigDecimal getPreco() {
+		return preco;
+	}
+
 }

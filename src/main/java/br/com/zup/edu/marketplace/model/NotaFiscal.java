@@ -1,8 +1,15 @@
 package br.com.zup.edu.marketplace.model;
 
-import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class NotaFiscal {
@@ -28,4 +35,21 @@ public class NotaFiscal {
     @Deprecated
     public NotaFiscal() {
     }
+
+	public Long getId() {
+		return id;
+	}
+
+	public Usuario getDestinatario() {
+		return destinatario;
+	}
+
+	public List<Produto> getItens() {
+		return itens;
+	}
+
+	public BigDecimal getValorFinal() {
+		BigDecimal soma = itens.stream().map(produto -> produto.getPreco()).reduce(BigDecimal.ZERO, BigDecimal::add);
+		return soma;
+	}
 }
