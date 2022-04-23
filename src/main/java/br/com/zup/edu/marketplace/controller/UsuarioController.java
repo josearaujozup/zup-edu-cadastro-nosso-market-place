@@ -4,6 +4,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,8 +39,29 @@ public class UsuarioController {
 		
 		usuario.adiciona(produto);
 		
+		repository.save(usuario);
+		
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
+	
+	
+	@Transactional
+	@DeleteMapping("/usuarios/{usuarioId}/produtos/{produtoId}")
+	public ResponseEntity<?> removeMusica(@PathVariable("usuarioId") Long usuarioId, @PathVariable("produtoId") Long produtoId){
+		
+		Usuario usuario = repository.findById(usuarioId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"usuario nao cadastrado"));
+		
+//		System.out.println("usuario: " + usuario.getNome());
+		
+		Produto produto = produtoRepository.findById(produtoId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"produto nao cadastrado"));
+		
+		usuario.remove(produto);
+		
+		repository.save(usuario);
+		
+		return ResponseEntity.noContent().build();
+	}
+	
 	
 	
 }
